@@ -38,6 +38,7 @@ const useStyles = makeStyles(theme => ({
   	height: '300px',
   	padding: "10px",
   	border: '3px solid grey',
+  	overflow: 'auto',
   },
   chatBox: {
   	width: "85%",
@@ -75,7 +76,7 @@ const handleClick = () => {
 export default function Dashboard() {
 	const classes = useStyles();
 	//ChatContext Store
-	const [allChats] = React.useContext(ChatContext);
+	const {allChats, sendChatAction, user} = React.useContext(ChatContext);
 	const dept = Object.keys(allChats);
 	//react hook state
 	const [activeDept, changeDept] = React.useState(dept[0]);
@@ -85,7 +86,7 @@ export default function Dashboard() {
 		<div style={{backgroundColor: "rgba(255,183,0,0.5)"}}>
 	        <header className={classes.header}>
 	            <div className="w-50 p4 tl f3">
-	            	<p className="">💬 myGovApp</p>
+	            	<p className=""><span role="img" aria-label="textmsg">💬</span> myGovApp</p>
 	            </div>
 	            <div className="w-50 tr f3"><p>Startup-Punjab</p></div>
 	        </header>
@@ -165,7 +166,10 @@ export default function Dashboard() {
 			        		variant="contained" 
 		        			color="primary" 
 		        			className={classes.button}
-		        			onClick={handleClick}
+		        			onClick={() => {
+		        				sendChatAction({from: user, msg: chatMessage, dept: activeDept});
+		        				handleChange("");
+		        			}}
 		        		>
 						    Send
 						</Button>
@@ -174,7 +178,7 @@ export default function Dashboard() {
 	        </div>
 	        <div className={classes.footer}>
 	            <p>© 2019 Made By sniperline047</p>
-	            <a href="http://github.com/sniperline047"><p className="white pointer">🔗 GitHub Repo</p></a>
+	            <a href="http://github.com/sniperline047"><p className="white pointer"><span role="img" aria-label="link">🔗</span> GitHub Repo</p></a>
 	        </div>
 		</div>
 	);
